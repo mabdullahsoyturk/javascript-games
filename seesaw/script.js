@@ -1,38 +1,39 @@
 rotateRightButton = $("#rotateRight");
-rotateRightButton.click(rotateRight);
+rotateRightButton.click(rotate);
 
 rotateLeftButton = $("#rotateLeft");
-rotateLeftButton.click(rotateLeft);
+rotateLeftButton.click(rotate);
 
 groundMessage = $("#groundMessage");
 
 rotationDegree = 0;
-touchedGround = false;
 
-function rotateRight() {
-    touchedGround = rotationDegree >= 45 ? true: false;
-    if(touchedGround) {
-        groundMessage.html("Seesaw touched the ground!!!");
-        groundMessage.css("display", "block");
-        return;
-    }else {
-        groundMessage.css("display", "none");
-    }
-    rotationDegree = rotationDegree + 5;
-    rotateString = "rotate(".concat(rotationDegree).concat("deg)");
-    $(".seesaw").css("transform", rotateString);
+function rotate() {
+    const buttonId = $(this).attr('id');
+    
+    touchedGroundFromRight = rotationDegree >= 45 ? true: false;
+    touchedGroundFromLeft = rotationDegree <= -45 ? true: false;
+    touchedToGround(touchedGroundFromLeft, touchedGroundFromRight);
+
+    rotationDegree = buttonId === 'rotateRight' ? rotationDegree + 5: rotationDegree - 5;
+    rotateSeesaw();
 }
 
-function rotateLeft() {
-    touchedGround = rotationDegree <= -45 ? true: false;
-    if(touchedGround) {
-        groundMessage.html("Seesaw touched the ground!!!");
+function touchedToGround(fromLeft, fromRight) {
+    if(fromLeft) {
+        groundMessage.html("Seesaw touched the ground from left!!!");
         groundMessage.css("display", "block");
-        return;
+    }else if(fromRight) {
+        groundMessage.html("Seesaw touched the ground from right!!!");
+        groundMessage.css("display", "block");
     }else {
         groundMessage.css("display", "none");
     }
-    rotationDegree = rotationDegree - 5;
+}
+
+function rotateSeesaw() {
+    if(rotationDegree >= 45 || rotationDegree <= -45) return;
+
     rotateString = "rotate(".concat(rotationDegree).concat("deg)");
     $(".seesaw").css("transform", rotateString);
 }
