@@ -1,0 +1,59 @@
+*, *::after, *::before {
+    box-sizing: border-box;
+}
+
+:root {
+    --seesaw-size: 200px;
+}
+
+body {
+    margin: 0;
+}
+
+.main-title {
+    margin-top: 1em;
+    font-size: 3rem;
+    text-align: center;
+}
+
+.ground-message {
+    display: none;
+    font-size: 2rem;
+    text-align: center;
+}
+
+.platform {
+    margin-top: 1em;
+    width: 100vw;
+    height: 20vh; 
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+    align-items: center;
+}
+
+.seesaw {
+    width: var(--seesaw-size);
+    height: calc(var(--seesaw-size)*.10);
+    background-color: black;
+    transition: all 1s ease;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.buttons button {
+    margin: 1em;
+}
+
+.arrow-up {
+    width: 0; 
+    height: 0; 
+    border-left: 60px solid transparent;
+    border-right: 60px solid transparent;
+    border-bottom: 60px solid black;
+}
