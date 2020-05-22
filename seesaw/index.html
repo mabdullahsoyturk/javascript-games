@@ -10,20 +10,24 @@
 <body>
     <div class="main-title">Seesaw Game</div>
     <div class="platform">
-        <div class="seesaw"></div>
+        <div class="seesaw-wrapper">
+            <div class="balls">
+                <div class="ball-one"></div>
+                <div class="ball-two"></div>
+            </div>
+            <div class="seesaw"></div>
+        </div>
         <div class="arrow-up"></div>
     </div>
-    <div class="ground-message", id="groundMessage">
-        
-    </div>
     <div class="buttons">
-        <div id="rotateLeft">
+        <div id="rotateLeft" class="rotate-left">
             <button id="rotateLeftButton">Rotate Left</button>
         </div>
-        <div id="rotateRight">
+        <div id="rotateRight" class="rotate-right">
             <button id="rotateRightButton">Rotate Right</button>
         </div>
     </div>
+    <div class="ground-message", id="groundMessage"></div>
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 </body>
 </html>
