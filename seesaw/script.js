@@ -1,39 +1,31 @@
-const rotateRightButton = $("#rotateRight");
-rotateRightButton.click(rotate);
+const rotateRightButton = document.getElementById("rotateRight");
+rotateRightButton.addEventListener("click", onRotate);
 
-const rotateLeftButton = $("#rotateLeft");
-rotateLeftButton.click(rotate);
+const rotateLeftButton = document.getElementById("rotateLeft");
+rotateLeftButton.addEventListener("click", onRotate);
 
 let rotationDegree = 0;
 
-function rotate() {
-    const buttonId = $(this).attr('id');
+function onRotate(event) {
+    const buttonId = event.target.id;
     
-    const touchedGroundFromRight = rotationDegree >= 45 ? true: false;
-    const touchedGroundFromLeft = rotationDegree <= -45 ? true: false;
-    touchedToGround(touchedGroundFromLeft, touchedGroundFromRight);
+    const touchedGround = rotationDegree >= 45 || rotationDegree <= -45 ? true: false;
+    displayMessage(touchedGround);
 
-    rotationDegree = buttonId === 'rotateRight' ? rotationDegree + 5: rotationDegree - 5;
+    rotationDegree = buttonId === 'rotateRightButton' ? rotationDegree + 5: rotationDegree - 5;
     rotateSeesaw();
 }
 
-function touchedToGround(fromLeft, fromRight) {
-    const groundMessage = $("#groundMessage");
-
-    if(fromLeft) {
-        groundMessage.html("Seesaw touched the ground from left!!!");
-        groundMessage.css("display", "block");
-    }else if(fromRight) {
-        groundMessage.html("Seesaw touched the ground from right!!!");
-        groundMessage.css("display", "block");
-    }else {
-        groundMessage.css("display", "none");
-    }
+function displayMessage(touchedGround) {
+    const groundMessage = document.getElementById("groundMessage");
+    groundMessage.style.display = touchedGround ? "block": "none";
 }
 
 function rotateSeesaw() {
     if(rotationDegree >= 45 || rotationDegree <= -45) return;
 
-    rotateString = "rotate(".concat(rotationDegree).concat("deg)");
-    $(".seesaw-wrapper").css("transform", rotateString);
+    const rotateString = "rotate(".concat(rotationDegree).concat("deg)");
+    const seesawWrapper = document.getElementById("seesawWrapper");
+    
+    seesawWrapper.style.transform = rotateString;
 }
