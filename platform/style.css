@@ -1,0 +1,33 @@
+.playground {
+    width: 700px;
+    height: 500px;
+    margin: 100px auto auto;
+    border: 1px solid black;
+}
+
+.player {
+    width:20px;
+    height:40px;
+    background-color: green;
+    position: absolute;
+    margin-left: 100px;
+    margin-top: 210px;
+    z-index: 0;
+}
+
+.enemy {
+    width:20px;
+    height:20px;
+    background-color: #ff0000;
+    position: absolute;
+    z-index: 0;
+    left: 0;
+    top: 0;
+}
+
+.ground {
+    height: 20px;
+    width: 100%;
+    background-color: black;
+    margin-top: 250px;
+}
