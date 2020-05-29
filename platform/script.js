@@ -1,55 +1,109 @@
+const playgroundPosition = document.querySelector('.playground').getBoundingClientRect();
 const player = $(".player");
 const enemy = $(".enemy");
+let isMoving = false;
 let isJumping = false;
 let isGoingUp = false;
 let isGoingDown = false;
-
+let isGameOver = false;
+let direction = '';
 let counter = 0;
-const playgroundPosition = document.querySelector('.playground').getBoundingClientRect();
 let level = 2;
-$(document).on('keypress',function(e) {
-    if(e.which === 119 || e.which === 32) {
-        isJumping = true;
+let step = 0;
+let keyMap = {87: false, 65: false, 68: false};
+
+$(document).keydown(function(e) {
+    if (e.keyCode in keyMap) {
+        keyMap[e.keyCode] = true;
+        if (keyMap[87]) {
+            isJumping = true;
+        }
+        if (keyMap[65]) {
+            isMoving = true;
+            direction = 'left';
+        } else if (keyMap[68]) {
+            isMoving = true;
+            direction = 'right';
+        }
+    }
+}).keyup(function(e) {
+    if (e.keyCode in keyMap) {
+        keyMap[e.keyCode] = false;
     }
 });
+
 requestAnimationFrame(mainLoop);
 
 function mainLoop(time) {
-    if(isJumping) {
-        jump();
-    }
 
     const enemyPosition = document.querySelector('.enemy').getBoundingClientRect();
     const playerPosition = document.querySelector('.player').getBoundingClientRect();
 
-    if(!isElementInsidePlayGround(enemyPosition)) {
+    if(isJumping) {
+        jump();
+    }
+
+    if (isMoving) {
+        move(playerPosition, direction);
+    }
+
+    if(!isElementInsidePlayGround(enemyPosition) && !isGameOver) {
         createEnemy();
         level++;
     }
 
     moveEnemy(level);
 
-    if (collision(enemyPosition,playerPosition)) {
+    if (collision(enemyPosition, playerPosition)) {
+        isGameOver = true;
         alert("Game Over");
         restart();
+    } else {
+        requestAnimationFrame(mainLoop);
     }
-    requestAnimationFrame(mainLoop);
 }
 
 function restart() {
+    player.css("left",'350px');
     createEnemy();
     level = 2;
+    isGameOver= false;
     requestAnimationFrame(mainLoop);
 }
 
 function moveEnemy(speed) {
-    const leftInitial = enemy.css('left');
     enemy.css({
         left: '-=' + speed
     })
-    const leftFinal = enemy.css('left');
-    console.log(Number(leftFinal.substring(0,leftFinal.length-2)) - Number(leftInitial.substring(0,leftInitial.length-2)));
+}
 
+function move(playerPosition, direction) {
+    if (step === 5) {
+        isMoving = false;
+        step = 0;
+    }
+    if (direction === 'right') {
+        let tempPosition = playerPosition.toJSON();
+        tempPosition.right += 5;
+        if (isElementInsidePlayGround(tempPosition)) {
+            player.css({
+                left: '+=5'
+            });
+            step++;
+        }
+    } else if (direction === 'left') {
+        let tempPosition = playerPosition.toJSON();
+        tempPosition.left -= 5;
+        if (isElementInsidePlayGround(tempPosition)) {
+            player.css({
+                left: '-=5'
+            });
+            step++;
+        }
+    }
+    else {
+        step = 5;
+    }
 }
 
 function jump() {
@@ -79,9 +133,8 @@ function jump() {
 }
 
 function createEnemy() {
-    const random = Math.random() * 50
     enemy.css('left', playgroundPosition.right-25);
-    enemy.css('top', playgroundPosition.top+231-random);
+    enemy.css('top', playgroundPosition.top+231-Math.random() * 50);
 }
 
 function isElementInsidePlayGround(elementPosition) {
