@@ -1,3 +1,6 @@
+import Vec   from "../vec.js";
+import State from "../state.js"; 
+
 class Monster {
     constructor(pos) { this.pos = pos; }
 
@@ -27,3 +30,5 @@ class Monster {
 const monsterSpeed = 4;
 
 Monster.prototype.size = new Vec(1.2, 2);
+
+export default Monster;

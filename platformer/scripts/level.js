@@ -1,3 +1,9 @@
+import Player  from "./actors/player.js";
+import Coin    from "./actors/coin.js";
+import Lava    from "./actors/lava.js";
+import Monster from "./actors/monster.js";
+import Vec     from "./vec.js"; 
+
 class Level {
     constructor(plan) {
         let rows = plan.trim().split("\n").map(l => [...l]);
@@ -9,8 +15,7 @@ class Level {
             return row.map((ch, x) => {
                 let type = levelChars[ch];
                 if (typeof type == "string") return type;
-                this.startActors.push(
-                    type.create(new Vec(x, y), ch));
+                this.startActors.push(type.create(new Vec(x, y), ch));
                 return "empty";
             });
         });
@@ -40,3 +45,5 @@ Level.prototype.touches = function(pos, size, type) {
     }
     return false;
 };
+
+export default Level;

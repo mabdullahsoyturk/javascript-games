@@ -1,3 +1,6 @@
+import Vec   from "../vec.js";
+import State from "../state.js"; 
+
 // They mostly just sit in their place. But to liven up the game a little, they are given a “wobble”, a slight vertical back-and-forth motion.
 // To track this, a coin object stores a base position as well as a wobble property that tracks the phase of the bouncing motion.
 // Together, these determine the coin’s actual position (stored in the pos property).
@@ -35,3 +38,5 @@ Coin.prototype.update = function(time) {
     return new Coin(this.basePos.plus(new Vec(0, wobblePos)),
         this.basePos, wobble);
 };
+
+export default Coin;

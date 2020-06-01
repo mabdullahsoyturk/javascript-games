@@ -1,26 +1,7 @@
-let simpleLevelPlan = `
-......................
-..#................#..
-..#..............=.#..
-..#.........o.o....#..
-..#.@......#####...#..
-..#####............#..
-......#++++++++++++#..
-......##############..
-......................`;
-
-// function trackKeys(keys) {
-//     let down = Object.create(null);
-//     function track(event) {
-//         if (keys.includes(event.key)) {
-//             down[event.key] = event.type == "keydown";
-//             event.preventDefault();
-//         }
-//     }
-//     window.addEventListener("keydown", track);
-//     window.addEventListener("keyup", track);
-//     return down;
-// }
+import DOMDisplay  from "./domDisplay.js";
+import State       from "./state.js";
+import Level       from "./level.js";
+import { GAME_LEVELS } from "./levels.js";
 
 function trackKeys(keys) {
     let down = Object.create(null);
@@ -38,8 +19,6 @@ function trackKeys(keys) {
     };
     return down;
 }
-
-const arrowKeys = trackKeys(["ArrowLeft", "ArrowRight", "ArrowUp"]);
 
 // I have set a maximum frame step of 100 milliseconds (one-tenth of a second).
 // When the browser tab or window with our page is hidden,

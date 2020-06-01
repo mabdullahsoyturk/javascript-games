@@ -11,3 +11,5 @@ class Vec {
         return new Vec(this.x * factor, this.y * factor);
     }
 }
+
+export default Vec;

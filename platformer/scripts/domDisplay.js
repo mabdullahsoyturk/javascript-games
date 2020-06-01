@@ -84,3 +84,5 @@ function drawActors(actors) {
         return rect;
     }));
 }
+
+export default DOMDisplay;

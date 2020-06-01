@@ -1,3 +1,6 @@
+import Vec   from "../vec.js";
+import State from "../state.js"; 
+
 class Lava {
     // When constructing a Lava actor, we need to initialize the object differently depending on the character it is based on.
     // Dynamic lava moves along at its current speed until it hits an obstacle.
@@ -38,3 +41,5 @@ Lava.prototype.update = function(time, state) {
         return new Lava(this.pos, this.speed.times(-1));
     }
 };
+
+export default Lava;

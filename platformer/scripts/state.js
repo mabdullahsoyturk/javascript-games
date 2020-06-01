@@ -40,3 +40,5 @@ function overlap(actor1, actor2) {
         actor1.pos.y + actor1.size.y > actor2.pos.y &&
         actor1.pos.y < actor2.pos.y + actor2.size.y;
 }
+
+export default State;

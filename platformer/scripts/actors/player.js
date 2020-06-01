@@ -1,3 +1,5 @@
+import Vec from "../vec.js";
+
 class Player {
     constructor(pos, speed) {
         this.pos = pos;
@@ -47,3 +49,5 @@ Player.prototype.update = function(time, state, keys) {
     }
     return new Player(pos, new Vec(xSpeed, ySpeed));
 };
+
+export default Player;
