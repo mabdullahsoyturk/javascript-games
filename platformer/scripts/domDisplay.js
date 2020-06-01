@@ -21,7 +21,7 @@ DOMDisplay.prototype.syncState = function(state) {
 DOMDisplay.prototype.scrollPlayerIntoView = function(state) {
     let width = this.dom.clientWidth;
     let height = this.dom.clientHeight;
-    let margin = width / 3;
+    let margin = width/3;
 
     // The viewport
     let left = this.dom.scrollLeft, right = left + width;
@@ -32,8 +32,7 @@ DOMDisplay.prototype.scrollPlayerIntoView = function(state) {
     // The way the player’s center is found shows how the methods on our Vec type allow computations with objects to be written in a relatively readable way.
     // To find the actor’s center, we add its position (its top-left corner) and half its size.
     // That is the center in level coordinates, but we need it in pixel coordinates, so we then multiply the resulting vector by our display scale.
-    let center = player.pos.plus(player.size.times(0.5))
-        .times(scale);
+    let center = player.pos.plus(player.size.times(0.5)).times(scale);
 
     if (center.x < left + margin) {
         this.dom.scrollLeft = center.x - margin;
@@ -81,6 +80,9 @@ function drawActors(actors) {
         rect.style.height = `${actor.size.y * scale}px`;
         rect.style.left = `${actor.pos.x * scale}px`;
         rect.style.top = `${actor.pos.y * scale}px`;
+        if (actor.type === 'lasergun') {
+            rect.style.transform = `rotate(${actor.angle}deg)`;
+        }
         return rect;
     }));
 }

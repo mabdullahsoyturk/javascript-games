@@ -1,16 +1,18 @@
-import DOMDisplay  from "./domDisplay.js";
-import State       from "./state.js";
-import Level       from "./level.js";
-import { GAME_LEVELS } from "./levels.js";
+import DOMDisplay from "./domDisplay.js";
+import State from "./state.js";
+import Level from "./level.js";
+import {GAME_LEVELS} from "./levels.js";
 
 function trackKeys(keys) {
     let down = Object.create(null);
+
     function track(event) {
         if (keys.includes(event.key)) {
-            down[event.key] = event.type == "keydown";
+            down[event.key] = event.type === "keydown";
             event.preventDefault();
         }
     }
+
     window.addEventListener("keydown", track);
     window.addEventListener("keyup", track);
     down.unregister = () => {
@@ -28,14 +30,17 @@ function trackKeys(keys) {
 // such as the player falling through the floor.
 function runAnimation(frameFunc) {
     let lastTime = null;
+
     function frame(time) {
         if (lastTime != null) {
             let timeStep = Math.min(time - lastTime, 100) / 1000; // converts the time steps to seconds
+            // timeStep -->> bir önceki çizilen frameden sonra geçen zaman in seconds
             if (frameFunc(timeStep) === false) return;
         }
         lastTime = time;
         requestAnimationFrame(frame);
     }
+
     requestAnimationFrame(frame);
 }
 
@@ -85,12 +90,12 @@ function runLevel(level, Display) {
 
     return new Promise(resolve => {
         function escHandler(event) {
-            if (event.key != "Escape") return;
+            if (event.key !== "Escape") return;
             event.preventDefault();
-            if (running == "no") {
+            if (running === "no") {
                 running = "yes";
                 runAnimation(frame);
-            } else if (running == "yes") {
+            } else if (running === "yes") {
                 running = "pausing";
             } else {
                 running = "yes";
@@ -98,16 +103,15 @@ function runLevel(level, Display) {
         }
         window.addEventListener("keydown", escHandler);
         let arrowKeys = trackKeys(["ArrowLeft", "ArrowRight", "ArrowUp"]);
-
         function frame(time) {
-            if (running == "pausing") {
+            if (running === "pausing") {
                 running = "no";
                 return false;
             }
 
             state = state.update(time, arrowKeys);
             display.syncState(state);
-            if (state.status == "playing") {
+            if (state.status === "playing") {
                 return true;
             } else if (ending > 0) {
                 ending -= time;
@@ -139,4 +143,5 @@ async function runGame(plans, Display) {
         console.log("Game over");
     }
 }
+
 runGame(GAME_LEVELS, DOMDisplay);

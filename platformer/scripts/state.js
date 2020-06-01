@@ -14,12 +14,25 @@ class State {
     }
 }
 
-State.prototype.update = function(time, keys) {
-    let actors = this.actors
-        .map(actor => actor.update(time, this, keys));
-    let newState = new State(this.level, actors, this.status);
+State.prototype.addBullet = function(bullet) {
 
-    if (newState.status != "playing") return newState;
+}
+
+State.prototype.update = function(time, keys) {
+
+    let actors = this.actors.map(actor => actor.update(time, this, keys));
+
+    this.actors.forEach(actor => {
+        if (actor.type === 'bullet' && actor.status === 'new') {
+            actor.status = 'alive'
+            actors.push(actor);
+        }
+    })
+
+    actors = actors.filter(actor => !(actor.type === 'bullet' && actor.status === 'died'));
+
+    let newState = new State(this.level, actors, this.status);
+    if (newState.status !== "playing") return newState;
 
     let player = newState.player;
     if (this.level.touches(player.pos, player.size, "lava")) {

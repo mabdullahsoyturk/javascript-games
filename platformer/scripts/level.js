@@ -1,8 +1,9 @@
-import Player  from "./actors/player.js";
-import Coin    from "./actors/coin.js";
-import Lava    from "./actors/lava.js";
+import Player from "./actors/player.js";
+import Coin from "./actors/coin.js";
+import Lava from "./actors/lava.js";
+import Lasergun from "./actors/lasergun.js";
 import Monster from "./actors/monster.js";
-import Vec     from "./vec.js"; 
+import Vec from "./vec.js";
 
 class Level {
     constructor(plan) {
@@ -26,10 +27,11 @@ const levelChars = {
     ".": "empty", "#": "wall", "+": "lava",
     "@": Player, "o": Coin,
     "=": Lava, "|": Lava, "v": Lava,
+    "x": Lasergun,
     "M": Monster
 };
 
-Level.prototype.touches = function(pos, size, type) {
+Level.prototype.touches = function (pos, size, type) {
     var xStart = Math.floor(pos.x);
     var xEnd = Math.ceil(pos.x + size.x);
     var yStart = Math.floor(pos.y);

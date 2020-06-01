@@ -34,7 +34,6 @@ Player.prototype.update = function(time, state, keys) {
         pos = movedX;
     }
 
-
     // We check for walls again. If we don’t hit any, the new position is used. If there is a wall, there are two possible outcomes.
     // When the up arrow is pressed and we are moving down (meaning the thing we hit is below us), the speed is set to a relatively large, negative value.
     // This causes the player to jump. If that is not the case, the player simply bumped into something, and the speed is set to zero.
