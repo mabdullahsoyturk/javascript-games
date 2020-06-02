@@ -11,6 +11,30 @@ class Level {
     }
 }
 
+Level.prototype.isOutside = function (pos, size, type) {
+    var xStart = Math.floor(pos.x);
+    var xEnd = Math.ceil(pos.x + size.x);
+    var yStart = Math.floor(pos.y);
+    var yEnd = Math.ceil(pos.y + size.y);
+    let isOutside = false;
+    if (type === 'player') {
+        for (var y = yStart; y < yEnd; y++) {
+            isOutside = y < 0 || y >= Level.size.y;
+            if (isOutside) {
+                return true;
+            }
+        }
+    } else if (type === 'wall') {
+        for (var x = xStart; x < xEnd; x++) {
+            isOutside = x < -size.x;
+            if (isOutside) {
+                return true;
+            }
+        }
+    }
+    return false;
+};
+
 Level.prototype.touches = function (pos, size, type) {
     var xStart = Math.floor(pos.x);
     var xEnd = Math.ceil(pos.x + size.x);

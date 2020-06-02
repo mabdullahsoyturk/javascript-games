@@ -13,21 +13,27 @@ class Wall {
     get type() { return "wall"; }
 
     static create() {
-        return new Wall(new Vec(Level.size.x, Math.random()*Level.size.y), new Vec(2, 5));
+        const walls = [];
+        const random = Math.random()*16 + 2;
+        const compliment =  18 - random;
+        walls.push(new Wall(new Vec(Level.size.x, 0), new Vec(2, random)));
+        walls.push(new Wall(new Vec(Level.size.x, Level.size.y-compliment), new Vec(2, compliment)));
+        return walls;
     }
 }
 
 Wall.prototype.collide = function(state) {
     return new State(state.level, state.actors, "lost", state.timer);
+    // return state;
 };
 
 Wall.prototype.update = function(time, state) {
     let newPos = this.pos.plus(Wall.speed.times(time));
-    // if (!state.level.touches(newPos, this.size, "wall")) {
+    if (!state.level.isOutside(newPos, this.size, "wall")) {
         return new Wall(newPos, this.size);
-    // } else {
-    //     return Wall.create();
-    // }
+    } else {
+        return null;
+    }
 };
 
 export default Wall;

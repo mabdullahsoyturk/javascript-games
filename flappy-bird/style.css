@@ -10,12 +10,18 @@
     position: relative;
 }
 
-.player {
-    background: rgb(64, 64, 64);
+.actor {
     position: absolute;
+}
+
+.player {
+    background: yellow;
+}
+
+.lost .player {
+    background: rgb(160, 64, 64);
 }
 
 .wall {
     background: green;
-    position: absolute;
 }

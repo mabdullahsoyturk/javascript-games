@@ -20,15 +20,16 @@ class State {
 }
 
 State.prototype.update = function(time, keys) {
-    State.newWallTime = 4;
+    State.newWallTime = 3;
     this.timer = this.timer + time;
     if (Math.round(this.timer) === State.newWallTime ){
         // create new Wall
         this.timer = 0;
-        this.actors.push(Wall.create());
+        Wall.create().forEach(wall => this.actors.push(wall));
     }
 
     let actors = this.actors.map(actor => actor.update(time, this, keys));
+    actors = actors.filter(actor => actor !== null);
 
     let newState = new State(this.level, actors, this.status, this.timer);
     if (newState.status !== "playing") return newState;

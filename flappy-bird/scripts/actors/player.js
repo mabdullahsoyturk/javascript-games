@@ -22,8 +22,8 @@ Player.prototype.update = function(time, state, keys) {
     let pos = this.pos;
     let ySpeed = this.speed.y + time * gravity;
     let movedY = pos.plus(new Vec(0, ySpeed * time));
-    if (state.level.touches(movedY, this.size, "wall")) {
-        //  TODO: öldür veya collide vs burda olabilir.
+    if (state.level.isOutside(movedY, this.size, "player")) {
+        //  TODO: collide?
     } else {
         pos = movedY;
     }
