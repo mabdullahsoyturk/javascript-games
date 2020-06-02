@@ -26,7 +26,8 @@ Lasergun.prototype.update = function(time, state) {
 };
 
 Lasergun.prototype.collide = function(state) {
-    return new State(state.level, state.actors, "lost");
+    let filtered = state.actors.filter(a => a !== this); // deactivate lasergun when touched
+    return new State(state.level, filtered, state.status);
 };
 
 Lasergun.prototype.fire = function(time, state) {
