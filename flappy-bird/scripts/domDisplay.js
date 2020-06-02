@@ -1,4 +1,4 @@
-import Level from "./level.js";
+import State from "./state.js";
 
 class DOMDisplay {
     constructor(parent) {
@@ -61,7 +61,7 @@ function elt(name, attrs, ...children) {
 function drawBackground(scale) {
     return elt("div", {
         class: "background",
-        style: `width: ${Level.size.x * scale}px; height: ${Level.size.y * scale}px;`
+        style: `width: ${State.mapSize.x * scale}px; height: ${State.mapSize.y * scale}px;`
     });
 }
 

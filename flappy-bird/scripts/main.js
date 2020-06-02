@@ -1,5 +1,5 @@
 import DOMDisplay from "./domDisplay.js";
-import Level from "./level.js";
+import Player from "./actors/player.js";
 import State from "./state.js";
 
 function trackKeys(keys) {
@@ -19,7 +19,6 @@ function trackKeys(keys) {
         window.removeEventListener("keyup", track);
     };
 
-    console.log(down);
     return down;
 }
 
@@ -39,9 +38,9 @@ function runAnimation(frameFunc) {
     requestAnimationFrame(frame);
 }
 
-function runLife(level, Display) {
+function runLife(Display) {
     let display = new Display(document.body);
-    let state = new State(level, level.startActors, "playing", 0);
+    let state = new State(new Player(), "playing");
     let running = "yes";
 
     return new Promise(resolve => {
@@ -62,6 +61,11 @@ function runLife(level, Display) {
         let arrowKeys = trackKeys(["ArrowUp"]);
 
         function frame(time) {
+            if (running === "pausing") {
+                running = "no";
+                return false;
+            }
+
             state.update(time, arrowKeys);
             display.syncState(state);
             if (state.status === "playing") {
@@ -80,9 +84,9 @@ function runLife(level, Display) {
 
 async function runGame(Display) {
     let lives = 3;
-    while (lives != 0) {
+    while (lives !== 0) {
         console.log(`Remaining lives: ${lives}`);
-        await runLife(new Level(), Display);
+        await runLife(Display);
         lives--;
     }
     console.log("Game over");
