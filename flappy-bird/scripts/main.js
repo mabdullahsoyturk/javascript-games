@@ -18,6 +18,8 @@ function trackKeys(keys) {
         window.removeEventListener("keydown", track);
         window.removeEventListener("keyup", track);
     };
+
+    console.log(down);
     return down;
 }
 
@@ -39,7 +41,7 @@ function runAnimation(frameFunc) {
 
 function runLife(level, Display) {
     let display = new Display(document.body);
-    let state = State.start(level);
+    let state = new State(level, level.startActors, "playing", 0);
     let running = "yes";
 
     return new Promise(resolve => {
@@ -60,12 +62,7 @@ function runLife(level, Display) {
         let arrowKeys = trackKeys(["ArrowUp"]);
 
         function frame(time) {
-            if (running === "pausing") {
-                running = "no";
-                return false;
-            }
-
-            state = state.update(time, arrowKeys);
+            state.update(time, arrowKeys);
             display.syncState(state);
             if (state.status === "playing") {
                 return true;
@@ -81,14 +78,11 @@ function runLife(level, Display) {
     });
 }
 
-
-
-
 async function runGame(Display) {
     let lives = 3;
-    while (lives > 0) {
+    while (lives != 0) {
         console.log(`Remaining lives: ${lives}`);
-        let status = await runLife(new Level(), Display);
+        await runLife(new Level(), Display);
         lives--;
     }
     console.log("Game over");

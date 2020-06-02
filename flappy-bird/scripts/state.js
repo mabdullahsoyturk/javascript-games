@@ -1,54 +1,42 @@
 import Wall from "./actors/wall.js";
 class State {
-
-    static newWallTime = 2;
-
     constructor(level, actors, status, timer) {
         this.level = level;
         this.actors = actors;
         this.status = status;  // Playing, Lost, Win
         this.timer = timer;
-    }
-
-    static start(level) {
-        return new State(level, level.startActors, "playing", 0);
+        this.newWallTime = 2;
     }
 
     get player() {
         return this.actors.find(a => a.type === "player");
     }
-}
 
-State.prototype.update = function(time, keys) {
-    State.newWallTime = 3;
-    this.timer = this.timer + time;
-    if (Math.round(this.timer) === State.newWallTime ){
-        // create new Wall
-        this.timer = 0;
-        Wall.create().forEach(wall => this.actors.push(wall));
-    }
-
-    let actors = this.actors.map(actor => actor.update(time, this, keys));
-    actors = actors.filter(actor => actor !== null);
-
-    let newState = new State(this.level, actors, this.status, this.timer);
-    if (newState.status !== "playing") return newState;
-
-    let player = newState.player;
-
-    for (let actor of actors) {
-        if (actor !== player && overlap(actor, player)) {
-            newState = actor.collide(newState);
+    update(time, keys) {
+        this.newWallTime = 3;
+        this.timer = this.timer + time;
+        if (Math.round(this.timer) === this.newWallTime ){
+            // create new Wall
+            this.timer = 0;
+            Wall.create().forEach(wall => this.actors.push(wall));
+        }
+    
+        this.actors = this.actors.map(actor => actor.update(time, this, keys));
+        this.actors = this.actors.filter(actor => actor !== null);
+    
+        for (let actor of this.actors) {
+            if (actor !== this.player && this.overlap(actor, this.player)) {
+                this.status = "lost";
+            }
         }
     }
-    return newState;
-};
 
-function overlap(actor1, actor2) {
-    return actor1.pos.x + actor1.size.x > actor2.pos.x &&
-        actor1.pos.x < actor2.pos.x + actor2.size.x &&
-        actor1.pos.y + actor1.size.y > actor2.pos.y &&
-        actor1.pos.y < actor2.pos.y + actor2.size.y;
+    overlap(actor1, actor2) {
+        return actor1.pos.x + actor1.size.x > actor2.pos.x &&
+            actor1.pos.x < actor2.pos.x + actor2.size.x &&
+            actor1.pos.y + actor1.size.y > actor2.pos.y &&
+            actor1.pos.y < actor2.pos.y + actor2.size.y;
+    }
 }
 
 export default State;
