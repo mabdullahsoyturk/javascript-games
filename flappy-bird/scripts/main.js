@@ -40,7 +40,6 @@ function runAnimation(frameFunc) {
 function runLife(level, Display) {
     let display = new Display(document.body);
     let state = State.start(level);
-    let ending = 1;
     let running = "yes";
 
     return new Promise(resolve => {
@@ -70,9 +69,6 @@ function runLife(level, Display) {
             display.syncState(state);
             if (state.status === "playing") {
                 return true;
-            } else if (ending > 0) {
-                ending -= time;
-                return true;
             } else {
                 display.clear();
                 window.removeEventListener("keydown", escHandler);
@@ -90,12 +86,12 @@ function runLife(level, Display) {
 
 async function runGame(Display) {
     let lives = 3;
-    // while (lives > 0) {
-    //     console.log(`Remaining lives: ${lives}`);
-    let status = await runLife(new Level(), Display);
-    // lives--;
-    // }
-    // console.log("Game over");
+    while (lives > 0) {
+        console.log(`Remaining lives: ${lives}`);
+        let status = await runLife(new Level(), Display);
+        lives--;
+    }
+    console.log("Game over");
 }
 
 runGame(DOMDisplay);
