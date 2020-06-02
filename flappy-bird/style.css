@@ -1,0 +1,21 @@
+.background {
+    background: rgb(52, 166, 251);
+}
+
+.game {
+    overflow: hidden;
+    max-width: 700px;
+    max-height: 500px;
+    margin: 100px auto auto;
+    position: relative;
+}
+
+.player {
+    background: rgb(64, 64, 64);
+    position: absolute;
+}
+
+.wall {
+    background: green;
+    position: absolute;
+}

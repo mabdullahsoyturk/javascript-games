@@ -1,12 +1,17 @@
+import Wall from "./actors/wall.js";
 class State {
-    constructor(level, actors, status) {
+
+    static newWallTime = 2;
+
+    constructor(level, actors, status, timer) {
         this.level = level;
         this.actors = actors;
         this.status = status;  // Playing, Lost, Win
+        this.timer = timer;
     }
 
     static start(level) {
-        return new State(level, level.startActors, "playing");
+        return new State(level, level.startActors, "playing", 0);
     }
 
     get player() {
@@ -15,25 +20,20 @@ class State {
 }
 
 State.prototype.update = function(time, keys) {
+    State.newWallTime = 4;
+    this.timer = this.timer + time;
+    if (Math.round(this.timer) === State.newWallTime ){
+        // create new Wall
+        this.timer = 0;
+        this.actors.push(Wall.create());
+    }
 
     let actors = this.actors.map(actor => actor.update(time, this, keys));
 
-    this.actors.forEach(actor => {
-        if (actor.type === 'bullet' && actor.status === 'new') {
-            actor.status = 'alive'
-            actors.push(actor);
-        }
-    })
-
-    actors = actors.filter(actor => !(actor.type === 'bullet' && actor.status === 'died'));
-
-    let newState = new State(this.level, actors, this.status);
+    let newState = new State(this.level, actors, this.status, this.timer);
     if (newState.status !== "playing") return newState;
 
     let player = newState.player;
-    if (this.level.touches(player.pos, player.size, "lava")) {
-        return new State(this.level, actors, "lost");
-    }
 
     for (let actor of actors) {
         if (actor !== player && overlap(actor, player)) {
