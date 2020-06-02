@@ -2,7 +2,11 @@ import Vec   from "../vec.js";
 import State from "../state.js"; 
 
 class Monster {
-    constructor(pos) { this.pos = pos; }
+    constructor(pos) { 
+        this.pos = pos;
+        this.monsterSpeed = 4; 
+        this.size = new Vec(1.2, 2);
+    }
 
     get type() { return "monster"; }
 
@@ -10,7 +14,7 @@ class Monster {
 
     update(time, state) {
         let player = state.player;
-        let speed = (player.pos.x < this.pos.x ? -1 : 1) * time * monsterSpeed;
+        let speed = (player.pos.x < this.pos.x ? -1 : 1) * time * this.monsterSpeed;
         let newPos = new Vec(this.pos.x + speed, this.pos.y);
         if (state.level.touches(newPos, this.size, "wall")) return this;
         else return new Monster(newPos);
@@ -26,9 +30,5 @@ class Monster {
         }
     }
 }
-
-const monsterSpeed = 4;
-
-Monster.prototype.size = new Vec(1.2, 2);
 
 export default Monster;

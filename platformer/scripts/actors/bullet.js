@@ -8,6 +8,7 @@ class Bullet {
         this.direction = direction;
         this.angle = angle;
         this.status = status; // new, alive, died
+        this.size = new Vec(0.2, 0.2);
     }
     get type() { return "bullet"; }
 
@@ -15,22 +16,20 @@ class Bullet {
         const rads = -angle * Math.PI / 180;
         return new Bullet(pos, new Vec(this.speed*Math.sin(rads), this.speed*Math.cos(rads)), angle, 'new');
     }
-}
 
-Bullet.prototype.update = function(time, state) {
-    let newPos = this.pos.plus(this.direction.times(time));
-    if (!state.level.touches(newPos, this.size, "wall")) {
-        return new Bullet(newPos, this.direction, this.angle, 'alive');
-    } else {
-        this.status = 'died';
-        return this;
+    update(time, state) {
+        let newPos = this.pos.plus(this.direction.times(time));
+        if (!state.level.touches(newPos, this.size, "wall")) {
+            return new Bullet(newPos, this.direction, this.angle, 'alive');
+        } else {
+            this.status = 'died';
+            return this;
+        }
     }
-};
 
-Bullet.prototype.collide = function(state) {
-    return new State(state.level, state.actors, "lost");
-};
-
-Bullet.prototype.size = new Vec(0.2, 0.2);
+    collide(state) {
+        return new State(state.level, state.actors, "lost");
+    }
+}
 
 export default Bullet;

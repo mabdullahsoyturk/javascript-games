@@ -9,6 +9,9 @@ class Coin {
         this.pos = pos;
         this.basePos = basePos;
         this.wobble = wobble;
+        this.size = new Vec(0.6, 0.6);
+        this.wobbleSpeed = 8;
+        this.wobbleDist = 0.07;
     }
 
     get type() { return "coin"; }
@@ -17,26 +20,22 @@ class Coin {
         let basePos = pos.plus(new Vec(0.2, 0.1));
         return new Coin(basePos, basePos, Math.random() * Math.PI * 2);
     }
-}
 
-Coin.prototype.size = new Vec(0.6, 0.6);
-
-Coin.prototype.collide = function(state) {
-    let filtered = state.actors.filter(a => a !== this);
-    let status = state.status;
-    if (!filtered.some(a => a.type === "coin")) {
-        status = "won";
+    update(time) {
+        let wobble = this.wobble + time * this.wobbleSpeed;
+        let wobblePos = Math.sin(wobble) * this.wobbleDist;
+        return new Coin(this.basePos.plus(new Vec(0, wobblePos)),
+            this.basePos, wobble);
     }
-    return new State(state.level, filtered, status);
-};
 
-const wobbleSpeed = 8, wobbleDist = 0.07;
-
-Coin.prototype.update = function(time) {
-    let wobble = this.wobble + time * wobbleSpeed;
-    let wobblePos = Math.sin(wobble) * wobbleDist;
-    return new Coin(this.basePos.plus(new Vec(0, wobblePos)),
-        this.basePos, wobble);
-};
+    collide(state) {
+        let filtered = state.actors.filter(a => a !== this);
+        let status = state.status;
+        if (!filtered.some(a => a.type === "coin")) {
+            status = "won";
+        }
+        return new State(state.level, filtered, status);
+    }
+}
 
 export default Coin;
