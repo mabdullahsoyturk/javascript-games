@@ -1,4 +1,5 @@
 import { getInputDirection } from "./input.js";
+import { GRID_SIZE, outsideGrid } from "./grid.js";
 
 export let snakeSpeed = 5;
 const snakeBody = [{ x: 11, y: 11 }];
@@ -14,6 +15,16 @@ export function update() {
 
   snakeBody[0].x += inputDirection.x;
   snakeBody[0].y += inputDirection.y;
+
+  if(outsideGrid(snakeBody[0])) {
+    if(snakeBody[0].x > GRID_SIZE || snakeBody[0].y > GRID_SIZE) {
+      snakeBody[0].x = snakeBody[0].x % GRID_SIZE;
+      snakeBody[0].y = snakeBody[0].y % GRID_SIZE;
+    }else if(snakeBody[0].x < 1 || snakeBody[0].y > 1) {
+      snakeBody[0].x = snakeBody[0].x + GRID_SIZE;
+      snakeBody[0].y = snakeBody[0].y + GRID_SIZE;
+    }
+  }
 }
 
 export function draw(gameBoard) {
