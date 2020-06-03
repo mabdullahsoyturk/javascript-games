@@ -17,14 +17,19 @@ export function update() {
   snakeBody[0].y += inputDirection.y;
 
   if(outsideGrid(snakeBody[0])) {
-    if(snakeBody[0].x > GRID_SIZE || snakeBody[0].y > GRID_SIZE) {
+    if(snakeBody[0].x > GRID_SIZE) {
       snakeBody[0].x = snakeBody[0].x % GRID_SIZE;
+    }else if(snakeBody[0].y > GRID_SIZE) {
       snakeBody[0].y = snakeBody[0].y % GRID_SIZE;
-    }else if(snakeBody[0].x < 1 || snakeBody[0].y > 1) {
+    }else if(snakeBody[0].x < 1) {
       snakeBody[0].x = snakeBody[0].x + GRID_SIZE;
+    }else if(snakeBody[0].y < 1) {
       snakeBody[0].y = snakeBody[0].y + GRID_SIZE;
     }
   }
+
+  console.log(snakeBody[0].x);
+  console.log(snakeBody[0].y);
 }
 
 export function draw(gameBoard) {
