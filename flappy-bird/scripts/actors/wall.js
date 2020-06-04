@@ -3,7 +3,7 @@ import Vec from "../vec.js";
 class Wall {
     constructor(pos, wallHeight) {
         this.pos = pos;
-        this.size = new Vec(2, wallHeight);
+        this.size = new Vec(3, wallHeight);
         this.speed = new Vec(-7, 0);
     }
     get type() { return "wall"; }

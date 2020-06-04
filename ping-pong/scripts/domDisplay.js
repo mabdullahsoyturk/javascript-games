@@ -1,6 +1,6 @@
 import State from "./state.js";
 
-class DOMDisplay {
+export default class DOMDisplay {
     constructor(parent) {
         this.scale = 20;
         this.dom = elt("div", {class: "game"}, drawBackground(this.scale));
@@ -29,6 +29,7 @@ function elt(name, attrs, ...children) {
     return dom;
 }
 
+
 function drawBackground(scale) {
     return elt("div", {
         class: "background",
@@ -46,5 +47,3 @@ function drawActors(actors, scale) {
         return rect;
     }));
 }
-
-export default DOMDisplay;

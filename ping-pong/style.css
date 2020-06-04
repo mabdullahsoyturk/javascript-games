@@ -1,0 +1,27 @@
+.background {
+    background: rgb(52, 166, 251);
+}
+
+.game {
+    overflow: hidden;
+    max-width: 700px;
+    max-height: 500px;
+    margin: 100px auto auto;
+    position: relative;
+}
+
+.actor {
+    position: absolute;
+}
+
+.player {
+    background: green;
+}
+
+.competitor {
+    background: red;
+}
+
+.ball {
+    background: yellow;
+}
