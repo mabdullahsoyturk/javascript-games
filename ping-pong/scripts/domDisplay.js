@@ -39,11 +39,15 @@ function drawBackground(scale) {
 
 function drawActors(actors, scale) {
     return elt("div", {}, ...actors.map(actor => {
-        let rect = elt("div", {class: `actor ${actor.type}`});
+        let rect = elt("div", {class: `actor ${actor.type} ${actor.direction}`});
         rect.style.width = `${actor.size.x * scale}px`;
         rect.style.height = `${actor.size.y * scale}px`;
         rect.style.left = `${actor.pos.x * scale}px`;
         rect.style.top = `${actor.pos.y * scale}px`;
+        if (actor.type === 'mixer') {
+            rect.style.transform = `rotate(${actor.angle}deg)`;
+            rect.style.transformOrigin= `${actor.direction} center`;
+        }
         return rect;
     }));
 }

@@ -13,6 +13,14 @@ export default class Ball {
 
     get type() { return "ball"; }
 
+    get centerPos() {
+        return new Vec(this.pos.x + this.size.x/2, this.pos.y + this.size.y/2 );
+    }
+
+    get radius() {
+        return this.size.x/2;
+    }
+
     initialSpeed() {
         const initialAngle = Math.random() * 360;
         const rads = initialAngle * Math.PI / 180;
@@ -32,6 +40,9 @@ export default class Ball {
             if (isTouched) {
                 this.bounce(isTouched);
             }
+            // else if (state.isRectCollideWithCircle(this, state.mixers[0])) {
+            //     console.log('Collideeeee');
+            // }
             this.pos = newPos;
         }
     }

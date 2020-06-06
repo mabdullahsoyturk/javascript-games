@@ -24,4 +24,19 @@
 
 .ball {
     background: yellow;
+    border-radius: 50%; /* To make circle ball*/
+    shape-outside: circle();
+    clip-path: circle();
+}
+
+.mixer {
+    background: pink;
+}
+
+.mixer .top{
+    transform-origin: left center;
+}
+
+.mixer .bottom{
+    transform-origin: bottom center;
 }

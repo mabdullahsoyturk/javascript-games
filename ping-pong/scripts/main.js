@@ -41,7 +41,7 @@ function runAnimation(frameFunc) {
 
 function runLife(Display) {
     let display = new Display(document.body);
-    let state = new State(new Player(), new Competitor(), new Ball(), "playing");
+    let state = new State(new Player(), new Competitor(), new Ball(),"playing");
     let running = "yes";
 
     return new Promise(resolve => {
