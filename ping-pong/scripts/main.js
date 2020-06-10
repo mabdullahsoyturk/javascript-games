@@ -58,7 +58,7 @@ function runLife(Display) {
             }
         }
         window.addEventListener("keydown", escHandler);
-        let arrowKeys = trackKeys(["ArrowUp", "ArrowDown"]);
+        let arrowKeys = trackKeys(["ArrowUp", "ArrowDown", "ArrowRight", "ArrowLeft"]);
 
         function frame(time) {
             if (running === "pausing") {

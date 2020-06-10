@@ -11,7 +11,7 @@ export default class Mixer {
         } else {
             this.pos = new Vec(Math.round(State.mapSize.x/2), State.mapSize.y-this.size.y);
         }
-        this.angle = 23;
+        this.angle = 0;
         this.rotateSpeed = 100;
         this.directionTemp = 1;
     }

@@ -6,7 +6,7 @@ export default class Ball {
         this.initalPosition = new Vec(Math.round(State.mapSize.x/2), Math.round(State.mapSize.y/2));
         this.pos = this.initalPosition;
         this.size = new Vec(0.7 ,0.7);
-        this.velocity = 22;
+        this.velocity = 10;
         this.speed = this.initialSpeed();
         this.yCenterPos = this.pos.y + Math.round(this.size.y/2);
     }
@@ -40,11 +40,12 @@ export default class Ball {
             if (isTouched) {
                 this.bounce(isTouched);
             }
-            // else if (state.isRectCollideWithCircle(this, state.mixers[0])) {
-            //     console.log('Collideeeee');
-            // }
+            else if (state.isRectCollideWithCircle(state.mixers[0], this)) {
+                console.log('Collideeeee');
+            }
             this.pos = newPos;
         }
+
     }
 
     bounce(touchDirection) {

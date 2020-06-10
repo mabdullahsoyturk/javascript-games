@@ -1,4 +1,7 @@
 import Vec from "../vec.js";
+// import $ from '../jquery-3.5.1.min.js';
+// // window.jQuery = $;
+// // window.$ = $;
 
 class Player {
     constructor(pos, speed) {
@@ -7,7 +10,9 @@ class Player {
         this.playerXSpeed = 7;
         this.gravity = 30;
         this.jumpSpeed = 17;
-        this.size = new Vec(0.8, 1.5);
+        this.size = new Vec(2, 3.5);
+        this.walking = ['walk0.png', 'walk1.png', 'walk2.png', 'walk3.png', 'walk4.png', 'walk5.png', 'walk6.png', 'walk7.png'];
+        this.walkingIndex = 0;
     }
 
     get type() { return "player"; }
@@ -15,12 +20,20 @@ class Player {
     static create(pos) {
         // Because a player is one-and-a-half squares high, its initial position is set to be half a square above the position where the @ character appeared.
         // This way, its bottom aligns with the bottom of the square it appeared in.
-        return new Player(pos.plus(new Vec(0, -0.5)), new Vec(0, 0));
+        return new Player(pos.plus(new Vec(0, -2.5)), new Vec(0, 0));
     }
 
     update(time, state, keys) {
         let xSpeed = 0;
-        if (keys.ArrowLeft) xSpeed -= this.playerXSpeed;
+        if (keys.ArrowLeft) {
+            xSpeed -= this.playerXSpeed;
+            // const url = 'url(./zombie/'+this.walking[this.walkingIndex]+');';
+            const url = 'red'
+            console.log(url);
+            $(".player").css("background", url);
+            this.walkingIndex ++;
+            this.walkingIndex = this.walkingIndex%7;
+        }
         if (keys.ArrowRight) xSpeed += this.playerXSpeed;
         let movedX = this.pos.plus(new Vec(xSpeed * time, 0));
         if (!state.level.touches(movedX, this.size, "wall")) {

@@ -28,7 +28,7 @@ export default class State {
     }
 
     update(time, keys) {
-        this.ball.update(time, this);
+        this.ball.update(time, this, keys);
         this.player.update(time, this, keys);
         this.competitor.update(time, this, this.ball.yCenterPos);
         this.mixers.forEach(mixer => {
@@ -130,7 +130,7 @@ export default class State {
 
         // is this point actually on the line segment?
         // if so keep going, but if not, return false
-        const onSegment = this.isPointOnTheLine(x1,y1,x2,y2, closestX,closestY);
+        const onSegment = this.isPointOnTheLine(new Vec(closestX,closestY), linePoint1, linePoint2);
         if (!onSegment) return false;
 
 
@@ -173,8 +173,4 @@ export default class State {
         // rather than one #
         return d1 + d2 >= lineLen - buffer && d1 + d2 <= lineLen + buffer;
     }
-
-
-
-
 }

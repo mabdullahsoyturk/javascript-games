@@ -1,7 +1,12 @@
 .background {
-    background: rgb(52, 166, 251);
+    background: url("background.jpg");
     table-layout: fixed;
     border-spacing: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    opacity: 0.7;
+
 }
 
 .background td {
@@ -13,7 +18,7 @@
 }
 
 .wall {
-    background: white;
+    background: black;
 }
 
 .actor {
@@ -25,7 +30,9 @@
 }
 
 .player {
-    background: rgb(64, 64, 64);
+    /*width: 20px;*/
+    /*height: 20px;*/
+    background: url("zombie.png");
 }
 
 .monster {
