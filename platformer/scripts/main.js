@@ -113,9 +113,6 @@ function runLevel(level, Display) {
             display.syncState(state);
             if (state.status === "playing") {
                 return true;
-            } else if (ending > 0) {
-                ending -= time;
-                return true;
             } else {
                 display.clear();
                 window.removeEventListener("keydown", escHandler);

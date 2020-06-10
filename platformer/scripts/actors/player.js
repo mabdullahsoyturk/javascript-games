@@ -9,9 +9,10 @@ class Player {
         this.playerXSpeed = 7;
         this.gravity = 30;
         this.jumpSpeed = 17;
-        this.size = new Vec(2, 3.5);
-        this.walking = ['walk0.png', 'walk1.png', 'walk2.png', 'walk3.png', 'walk4.png', 'walk5.png', 'walk6.png', 'walk7.png'];
-        this.walkingIndex = 0;
+        this.size = new Vec(0.8, 1.5);
+        this.walking = ['./zombie/walk0.png', './zombie/walk1.png', './zombie/walk2.png', './zombie/walk3.png', './zombie/walk4.png', './zombie/walk5.png', './zombie/walk6.png', './zombie/walk7.png'];
+        this.backgroundIndex = 0;
+        this.background = "url(" + this.walking[0] + ")";
     }
 
     get type() { return "player"; }
@@ -24,15 +25,18 @@ class Player {
 
     update(time, state, keys) {
         let xSpeed = 0;
+
+        if(keys.ArrowLeft || keys.ArrowRight) {
+            this.updateBackground();
+        }
+
         if (keys.ArrowLeft) {
             xSpeed -= this.playerXSpeed;
-            // const url = 'url(./zombie/'+this.walking[this.walkingIndex]+');';
+            // const url = 'url(./zombie/'+this.walking[this.backgroundIndex]+');';
             const url = 'red'
             console.log(url);
             console.log($(".player").get()[0]);
-            $(".player").css("display", "none");
-            this.walkingIndex ++;
-            this.walkingIndex = this.walkingIndex%7;
+            //$(".player").css("display", "none");
         }
         if (keys.ArrowRight) xSpeed += this.playerXSpeed;
         let movedX = this.pos.plus(new Vec(xSpeed * time, 0));
@@ -52,7 +56,17 @@ class Player {
         } else {
             ySpeed = 0;
         }
+
+        this.speed = new Vec(xSpeed, ySpeed);
+
         return this;
+    }
+
+    updateBackground() {
+        this.backgroundIndex++;
+        this.backgroundIndex = this.backgroundIndex % 7;
+        this.background = this.walking[this.backgroundIndex];
+        console.log(this.background);
     }
 }
 

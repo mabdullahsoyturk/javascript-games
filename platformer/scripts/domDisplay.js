@@ -81,6 +81,10 @@ function drawActors(actors) {
         if (actor.type === 'lasergun') {
             rect.style.transform = `rotate(${actor.angle}deg)`;
         }
+
+        if(actor.type === "player") {
+            rect.style.background = `url(${actor.background}) cover`;
+        }
         return rect;
     }));
 }
