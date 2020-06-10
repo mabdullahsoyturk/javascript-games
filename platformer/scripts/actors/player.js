@@ -1,7 +1,6 @@
 import Vec from "../vec.js";
-// import $ from '../jquery-3.5.1.min.js';
-// // window.jQuery = $;
-// // window.$ = $;
+//import * as $ from '../jquery-3.5.1.min.js';
+import $ from "../jquery.module.js";
 
 class Player {
     constructor(pos, speed) {
@@ -30,7 +29,8 @@ class Player {
             // const url = 'url(./zombie/'+this.walking[this.walkingIndex]+');';
             const url = 'red'
             console.log(url);
-            $(".player").css("background", url);
+            console.log($(".player").get()[0]);
+            $(".player").css("display", "none");
             this.walkingIndex ++;
             this.walkingIndex = this.walkingIndex%7;
         }
@@ -52,7 +52,7 @@ class Player {
         } else {
             ySpeed = 0;
         }
-        return new Player(this.pos, new Vec(xSpeed, ySpeed));
+        return this;
     }
 }
 
