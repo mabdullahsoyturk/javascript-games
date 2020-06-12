@@ -1,5 +1,5 @@
 ## About
-This repository contains some games written in pure Javascript without using canvas. 
+This repository contains some games written in Javascript without using canvas. 
 
 ## List of Games
 
